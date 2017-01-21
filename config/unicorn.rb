@@ -1,6 +1,6 @@
 preload_app true
 timeout 60
-worker_processes 4
+worker_processes 2
 
 app_path = File.dirname(File.dirname(Dir.pwd))
 working_directory "#{app_path}/current"
@@ -17,8 +17,11 @@ check_client_connection false
 
 run_once = true
 
+# test
+root = "#{app_path}/current"
 before_exec do
-  ENV['BUNDLE_GEMFILE'] = "#{app_path}/current/Gemfile"
+  # ENV['BUNDLE_GEMFILE'] = "#{app_path}/current/Gemfile"
+  ENV['BUNDLE_GEMFILE'] = "#{root}/Gemfile"
 end
 
 before_fork do |server, worker|
