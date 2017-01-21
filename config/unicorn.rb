@@ -18,11 +18,11 @@ check_client_connection false
 run_once = true
 
 # test
-root = "#{app_path}/current"
-ENV['GEM_HOME'] = "#{app_path}/shared/bundle"
-before_exec do
-  # ENV['BUNDLE_GEMFILE'] = "#{app_path}/current/Gemfile"
-  ENV['BUNDLE_GEMFILE'] = "#{root}/Gemfile"
+# root = "#{app_path}/current"
+# ENV['GEM_HOME'] = "#{app_path}/shared/bundle"
+before_exec do |server|
+  ENV['BUNDLE_GEMFILE'] = "#{app_path}/current/Gemfile"
+  # ENV['BUNDLE_GEMFILE'] = "#{root}/Gemfile"
 end
 
 before_fork do |server, worker|
