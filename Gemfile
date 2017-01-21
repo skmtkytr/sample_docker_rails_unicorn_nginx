@@ -42,6 +42,7 @@ gem "font-awesome-rails"
 
 # Use Unicorn
 group :production do
+  gem 'unicorn'
   gem "unicorn-rails"
 end
 

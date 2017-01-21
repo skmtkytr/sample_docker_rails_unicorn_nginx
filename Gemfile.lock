@@ -368,6 +368,7 @@ DEPENDENCIES
   terminal-notifier-guard
   turbolinks (~> 5)
   uglifier (>= 1.3.0)
+  unicorn
   unicorn-rails
 
 RUBY VERSION
