@@ -20,7 +20,7 @@ run_once = true
 # test
 # root = "#{app_path}/current"
 # ENV['GEM_HOME'] = "#{app_path}/shared/bundle"
-before_exec do |server|
+before_exec do |_server|
   ENV['BUNDLE_GEMFILE'] = "#{app_path}/current/Gemfile"
   # ENV['BUNDLE_GEMFILE'] = "#{root}/Gemfile"
 end
@@ -42,7 +42,7 @@ before_fork do |server, worker|
   end
 end
 
-after_fork do |server, worker|
+after_fork do |_server, _worker|
   defined?(ActiveRecord::Base) &&
       ActiveRecord::Base.establish_connection
 end
