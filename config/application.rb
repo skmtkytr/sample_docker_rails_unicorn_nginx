@@ -23,6 +23,11 @@ module EFriends
     # -- all .rb files in that directory are automatically loaded.
     config.time_zone = 'Tokyo'
 
+    # デフォルトではどのヘルパーファイルにヘルパーメソッドを記述してもアプリケーション全体で使用できてしまう
+    # アプリケーションが肥大化した場合名前の競合が意図せず起きてしまうことも考えられるため
+    # Do not share helper methods
+    config.action_controller.include_all_helpers = false
+
     config.generators do |g|
       g.assets false
       g.helper false
