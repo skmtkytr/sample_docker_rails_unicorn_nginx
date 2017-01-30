@@ -13,7 +13,9 @@
 #//= require jquery
 #//= require jquery_ujs
 #//= require turbolinks
-#//= require_tree .
+#= require_tree .
 #= require jquery
+#= require jquery_ujs
 #= require turbolinks
 #= require bootstrap-sprockets
+#= require websocket_rails/main

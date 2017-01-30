@@ -2,14 +2,17 @@ preload_app true
 timeout 60
 worker_processes 2
 
-app_path = File.dirname(File.dirname(Dir.pwd))
-working_directory "#{app_path}/current"
+# app_path = File.dirname(File.dirname(Dir.pwd))
+app_path = Dir.pwd
+working_directory "#{app_path}"
 
-listen "#{app_path}/shared/tmp/sockets/unicorn.sock", backlog: 64
-pid "#{app_path}/shared/tmp/pids/unicorn.pid"
+listen 3000, backlog: 1024
+# listen "#{app_path}/tmp/sockets/unicorn.sock", backlog: 1024
+listen "/tmp/unicorn.sock", backlog: 1024
+pid "#{app_path}/tmp/pids/unicorn.pid"
 
-stderr_path "#{app_path}/shared/log/unicorn.stderr.log"
-stdout_path "#{app_path}/shared/log/unicorn.stdout.log"
+stderr_path "#{app_path}/log/unicorn.stderr.log"
+stdout_path "#{app_path}/log/unicorn.stdout.log"
 
 GC.respond_to?(:copy_on_write_friendly=) &&
     GC.copy_on_write_friendly = true
@@ -20,10 +23,10 @@ run_once = true
 # test
 # root = "#{app_path}/current"
 # ENV['GEM_HOME'] = "#{app_path}/shared/bundle"
-before_exec do |_server|
-  ENV['BUNDLE_GEMFILE'] = "#{app_path}/current/Gemfile"
+# before_exec do |_server|
+  # ENV['BUNDLE_GEMFILE'] = "#{app_path}/current/Gemfile"
   # ENV['BUNDLE_GEMFILE'] = "#{root}/Gemfile"
-end
+# end
 
 before_fork do |server, worker|
   defined?(ActiveRecord::Base) &&

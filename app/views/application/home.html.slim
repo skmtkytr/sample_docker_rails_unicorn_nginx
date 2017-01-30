@@ -1,0 +1,20 @@
+form#form
+  input#text_input
+  input[a.btn.btn-lg.btn-primary type="submit"]
+ul#msg_box
+
+script
+  |  var dispatcher = new WebSocketRails("192.168.99.100:3000/websocket");
+     var form = document.getElementById("form");
+      var text_input = document.getElementById("text_input");
+      var msg_box = document.getElementById("msg_box");
+
+      form.onsubmit = function(e){
+        dispatcher.trigger("messages.send", { msg: text_input.value });
+        e.preventDefault();
+      }
+      dispatcher.bind("spread_message", function(data) {
+        var li = document.createElement("li");
+        li.textContent = data.msg;
+        msg_box.appendChild(li);
+      });

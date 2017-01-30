@@ -11,6 +11,9 @@ Metrics/BlockLength:
 Rails:
   Enabled: false
 
+Style/ExtraSpacing:
+  Enabled: false
+
 Style/FrozenStringLiteralComment:
   Enabled: false
 
