@@ -1,0 +1,81 @@
+version: '2'
+services:
+  datastore:
+    build: containers/datastore
+    volumes:
+      - ./log:/usr/src/app/log
+
+  logger:
+    build: containers/fluentd
+    ports:
+      - "24224:24224"
+    volumes_from:
+      - datastore
+    volumes:
+      - ./log:/fluentd/log
+#    links:
+#      - rails
+
+  rails:
+    build: .
+    environment:
+      RAILS_ENV: development
+      DATABASE_URL: mysql2://root:pass@mysql:3306
+      REDIS_URL: redis://redis:6379
+      MYSQL_ROOT_PASSWORD: 'pass'
+    ports:
+      - '3000:3000'
+    volumes_from:
+        - datastore
+    volumes:
+      - .:/usr/src/app
+    links:
+          - mysql
+          - redis
+          - logger
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: docker.{{.Name}}
+
+  redis:
+    image: redis:2.8.19
+    ports:
+      - '6379:6379'
+    volumes_from:
+      - datastore
+    links:
+      - logger
+
+  mysql:
+    image: mysql:5.7.10
+    environment:
+      MYSQL_ROOT_PASSWORD: 'pass'
+    ports:
+      - '3306:3306'
+    volumes_from:
+        - datastore
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  nginx:
+    build: containers/nginx
+    ports:
+      - '80:8080'
+    volumes_from:
+        - datastore
+    links:
+      - rails
+      - logger
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: docker.{{.Name}}
+
+volumes:
+  mysql-data:
+    driver: local
+  www:
+    driver: local
