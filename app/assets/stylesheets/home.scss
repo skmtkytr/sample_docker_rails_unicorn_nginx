@@ -1,0 +1,17 @@
+// Place all the styles related to the Home controller here.
+// They will automatically be included in application.css.scss.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+body {
+  min-height: 2000px;
+  padding-top: 70px;
+}
+.carousel{
+  width:100%;  /*サイズ指定*/
+  margin:auto;
+}
+.carousel,
+.carousel .item,
+.carousel .item-mask,
+.carousel-inner > .item > img {
+  height:160px;
+}
